@@ -5,6 +5,7 @@ let ataqueJugador = "";
 let resultado = "";
 let vidasJugador = 3;
 let vidasEnemigo = 3;
+let finalizado = false;
 
 function seleccionarMascota() {
   const hipodoge = document.getElementById("hipodoge");
@@ -62,11 +63,18 @@ function crearMensajeFinal(mensaje) {
 function revisarVidas() {
   if (vidasEnemigo <= 0) {
     crearMensajeFinal("Felicitaciones Ganaste 🎉🎉🎉");
+    finalizado = true;
+    desabilitarBotones();
   } else if (vidasJugador <= 0) {
     crearMensajeFinal("Perdiste 😂🤣😂");
+    finalizado = true;
+    desabilitarBotones();
   }
 }
 function ataque() {
+  if (finalizado) {
+    return;
+  }
   ataqueAleatorioEnemigo();
   const jugador = ataqueJugador;
   const enemigo = ataqueEnemigo;
@@ -89,7 +97,14 @@ function ataque() {
   crearMensaje();
   revisarVidas();
 }
-
+function desabilitarBotones() {
+  const botonFuego = document.getElementById("boton-fuego");
+  const botonTierra = document.getElementById("boton-tierra");
+  const botonAgua = document.getElementById("boton-agua");
+  botonFuego.disabled = true;
+  botonTierra.disabled = true;
+  botonAgua.disabled = true;
+}
 function configAtaques() {
   const botonFuego = document.getElementById("boton-fuego");
   const botonTierra = document.getElementById("boton-tierra");
@@ -107,10 +122,14 @@ function configAtaques() {
     ataque();
   });
 }
-
+function reiniciar() {
+  location.reload();
+}
 function main() {
   const botonSeleccionar = document.getElementById("boton-seleccionar");
   botonSeleccionar.addEventListener("click", seleccionarMascota);
+  const botonReiniciar = document.getElementById("boton-reiniciar");
+  botonReiniciar.addEventListener("click", reiniciar);
   configAtaques();
 }
 
