@@ -6,25 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mokepon</title>
     <script src="./js/mokepon.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <h1>MOKEPON! 🔥💧🌱</h1>
+    <h1 class="titulo">MOKEPON! 🔥💧🌱</h1>
 
     <section id="seleccionar-mascota">
       <h2>Selecciona una mascota:</h2>
-      <label for="hipodoge">
-        Hipodoge
-        <input type="radio" name="mascota" id="hipodoge" />
-      </label>
-      <label for="capipepo">
-        Capipepo
-        <input type="radio" name="mascota" id="capipepo" />
-      </label>
-      <label for="ratigueya">
-        Ratigueya
-        <input type="radio" name="mascota" id="ratigueya" />
-      </label>
-
+      <div>
+        <label for="hipodoge" class="tarjeta-mascota">
+          <p>Hipodoge</p>
+          <div style="background-image: url(./assets/hipodoge.png)">
+            <input type="radio" name="mascota" id="hipodoge" />
+          </div>
+        </label>
+        <label for="capipepo" class="tarjeta-mascota">
+          <p>Capipepo</p>
+          <div style="background-image: url(./assets/capipepo.png)">
+            <input type="radio" name="mascota" id="capipepo" />
+          </div>
+        </label>
+        <label for="ratigueya" class="tarjeta-mascota">
+          <p>Ratigueya</p>
+          <div style="background-image: url(./assets/ratigueya.png)">
+            <input type="radio" name="mascota" id="ratigueya" />
+          </div>
+        </label>
+      </div>
       <button id="boton-seleccionar">Seleccionar</button>
     </section>
 
