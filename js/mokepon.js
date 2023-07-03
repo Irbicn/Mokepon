@@ -53,6 +53,19 @@ function actualizarVidas() {
   vidasEnemigoEl.innerText = vidasEnemigo;
   vidasJugadorEl.innerText = vidasJugador;
 }
+function crearMensajeFinal(mensaje) {
+  const elemento = document.createElement("p");
+  elemento.innerText = mensaje;
+  const mensajes = document.getElementById("mensajes");
+  mensajes.appendChild(elemento);
+}
+function revisarVidas() {
+  if (vidasEnemigo <= 0) {
+    crearMensajeFinal("Felicitaciones Ganaste 🎉🎉🎉");
+  } else if (vidasJugador <= 0) {
+    crearMensajeFinal("Perdiste 😂🤣😂");
+  }
+}
 function ataque() {
   ataqueAleatorioEnemigo();
   const jugador = ataqueJugador;
@@ -73,8 +86,8 @@ function ataque() {
     vidasJugador--;
     actualizarVidas();
   }
-
   crearMensaje();
+  revisarVidas();
 }
 
 function configAtaques() {
