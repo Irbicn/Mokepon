@@ -43,3 +43,20 @@ body {
   margin: 0;
   padding: 2px;
 }
+#boton-seleccionar {
+  border-radius: 10px;
+  border: solid 2px #5086c1;
+  background-color: transparent;
+  padding: 4px 10px;
+  -webkit-box-shadow: 3px 4px 8px 0px rgba(80, 134, 193, 1);
+  -moz-box-shadow: 3px 4px 8px 0px rgba(80, 134, 193, 1);
+  box-shadow: 3px 4px 8px 0px rgba(80, 134, 193, 1);
+}
+#boton-seleccionar:hover {
+  background-color: #5087c129;
+}
+#boton-seleccionar:active {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
