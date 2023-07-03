@@ -20,11 +20,20 @@ function seleccionarMascota() {
     mascotaJugador = "Capipepo";
   } else if (ratigueya.checked) {
     mascotaJugador = "Ratigueya";
+  } else {
+    return;
   }
 
   const elementoMascota = document.getElementById("mascota-jugador");
   elementoMascota.innerText = mascotaJugador;
   seleccionarMascotaEnemigo();
+  const sectionSeleccionarAtaque =
+    document.getElementById("seleccionar-ataque");
+  sectionSeleccionarAtaque.style.display = "block";
+  const sectionSeleccionarMascota = document.getElementById(
+    "seleccionar-mascota"
+  );
+  sectionSeleccionarMascota.style.display = "none";
 }
 
 function seleccionarMascotaEnemigo() {
@@ -61,6 +70,9 @@ function crearMensajeFinal(mensaje) {
   mensajes.appendChild(elemento);
 }
 function revisarVidas() {
+  if (vidasEnemigo > 0 && vidasJugador > 0) {
+    return;
+  }
   if (vidasEnemigo <= 0) {
     crearMensajeFinal("Felicitaciones Ganaste 🎉🎉🎉");
     finalizado = true;
@@ -70,6 +82,8 @@ function revisarVidas() {
     finalizado = true;
     desabilitarBotones();
   }
+  const sectionReiniciar = document.getElementById("reiniciar");
+  sectionReiniciar.style.display = "block";
 }
 function ataque() {
   if (finalizado) {
@@ -125,11 +139,22 @@ function configAtaques() {
 function reiniciar() {
   location.reload();
 }
-function main() {
+function ocultarSections() {
+  const sectionSeleccionarAtaque =
+    document.getElementById("seleccionar-ataque");
+  sectionSeleccionarAtaque.style.display = "none";
+  const sectionReiniciar = document.getElementById("reiniciar");
+  sectionReiniciar.style.display = "none";
+}
+function configBotones() {
   const botonSeleccionar = document.getElementById("boton-seleccionar");
   botonSeleccionar.addEventListener("click", seleccionarMascota);
   const botonReiniciar = document.getElementById("boton-reiniciar");
   botonReiniciar.addEventListener("click", reiniciar);
+}
+function main() {
+  ocultarSections();
+  configBotones();
   configAtaques();
 }
 
