@@ -3,6 +3,8 @@ let mascotaEnemigo = "";
 let ataqueEnemigo = "";
 let ataqueJugador = "";
 let resultado = "";
+let vidasJugador = 3;
+let vidasEnemigo = 3;
 
 function seleccionarMascota() {
   const hipodoge = document.getElementById("hipodoge");
@@ -45,8 +47,16 @@ function crearMensaje() {
   const mensajes = document.getElementById("mensajes");
   mensajes.appendChild(elemento);
 }
-function ataque(jugador) {
-  const enemigo = ataqueAleatorioEnemigo();
+function actualizarVidas() {
+  const vidasJugadorEl = document.getElementById("vidas-jugador");
+  const vidasEnemigoEl = document.getElementById("vidas-enemigo");
+  vidasEnemigoEl.innerText = vidasEnemigo;
+  vidasJugadorEl.innerText = vidasJugador;
+}
+function ataque() {
+  ataqueAleatorioEnemigo();
+  const jugador = ataqueJugador;
+  const enemigo = ataqueEnemigo;
 
   if (jugador === enemigo) {
     resultado = "empate 🤷‍♀️";
@@ -56,8 +66,12 @@ function ataque(jugador) {
     (jugador === "agua" && enemigo === "fuego")
   ) {
     resultado = "Ganaste 🎉";
+    vidasEnemigo--;
+    actualizarVidas();
   } else {
     resultado = "Perdiste 🤣";
+    vidasJugador--;
+    actualizarVidas();
   }
 
   crearMensaje();
