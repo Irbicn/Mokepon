@@ -35,6 +35,7 @@ class Mokepon {
     this.nombre = nombre;
     this.imagen = imagen;
     this.vida = vida;
+    this.ataques = [];
   }
 }
 
@@ -42,7 +43,27 @@ let Hipodoge = new Mokepon("Hipodoge", "assets/mokepones/hipodoge.png", 5);
 let Capipepo = new Mokepon("Capipepo", "assets/mokepones/capipepo.png", 5);
 let Ratigueya = new Mokepon("Ratigueya", "assets/mokepones/ratigueya.png", 5);
 
-mokepones.push(Hipodoge, Capipepo, Ratigueya);
+Hipodoge.ataques.push(
+  { nombre: "💧", id: "boton-agua" },
+  { nombre: "💧", id: "boton-agua" },
+  { nombre: "💧", id: "boton-agua" },
+  { nombre: "🔥", id: "boton-fuego" },
+  { nombre: "🌱", id: "boton-tierra" }
+);
+Capipepo.ataques.push(
+  { nombre: "🌱", id: "boton-agua" },
+  { nombre: "🌱", id: "boton-agua" },
+  { nombre: "🌱", id: "boton-agua" },
+  { nombre: "💧", id: "boton-fuego" },
+  { nombre: "🔥", id: "boton-tierra" }
+);
+Ratigueya.ataques.push(
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "💧", id: "boton-fuego" },
+  { nombre: "🌱", id: "boton-tierra" }
+);
 
 function seleccionarMascota() {
   mascotaJugador = "";
