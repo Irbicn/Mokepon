@@ -72,11 +72,11 @@ mokepones.push(Hipodoge, Capipepo, Ratigueya);
 function seleccionarMascota() {
   mascotaJugador = "";
 
-  if (hipodoge.checked) {
+  if (inputHipodoge.checked) {
     mascotaJugador = "Hipodoge";
-  } else if (capipepo.checked) {
+  } else if (inputCapipepo.checked) {
     mascotaJugador = "Capipepo";
-  } else if (ratigueya.checked) {
+  } else if (inputRatigueya.checked) {
     mascotaJugador = "Ratigueya";
   } else {
     return;
@@ -187,8 +187,8 @@ function configBotones() {
   botonReiniciar.addEventListener("click", reiniciar);
 }
 function configImagenes() {
-  imagenJugador.src = `./assets/${mascotaJugador}.png`;
-  imagenEnemigo.src = `./assets/${mascotaEnemigo}.png`;
+  imagenJugador.src = `./assets/mokepones/${mascotaJugador}.png`;
+  imagenEnemigo.src = `./assets/mokepones/${mascotaEnemigo}.png`;
 }
 function main() {
   mokepones.forEach((mokepon) => {
@@ -202,6 +202,9 @@ function main() {
     `;
     contenedorMascotas.innerHTML += opcionDeMokepones;
   });
+  inputCapipepo = document.getElementById("Capipepo");
+  inputHipodoge = document.getElementById("Hipodoge");
+  inputRatigueya = document.getElementById("Ratigueya");
   ocultarSections();
   configBotones();
   configAtaques();
