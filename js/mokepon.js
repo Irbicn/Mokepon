@@ -73,11 +73,11 @@ function seleccionarMascota() {
   mascotaJugador = "";
 
   if (inputHipodoge.checked) {
-    mascotaJugador = "Hipodoge";
+    mascotaJugador = inputHipodoge.id;
   } else if (inputCapipepo.checked) {
-    mascotaJugador = "Capipepo";
+    mascotaJugador = inputCapipepo.id;
   } else if (inputRatigueya.checked) {
-    mascotaJugador = "Ratigueya";
+    mascotaJugador = inputRatigueya.id;
   } else {
     return;
   }
