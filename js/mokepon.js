@@ -1,6 +1,3 @@
-const hipodoge = document.getElementById("hipodoge");
-const capipepo = document.getElementById("capipepo");
-const ratigueya = document.getElementById("ratigueya");
 const mensajes = document.getElementById("mensajes");
 const mensajeFinal = document.getElementById("mensaje-final");
 const vidasJugadorEl = document.getElementById("vidas-jugador");
@@ -19,8 +16,13 @@ const imagenEnemigo = document.getElementById("imagen-enemigo");
 const botonFuego = document.getElementById("boton-fuego");
 const botonTierra = document.getElementById("boton-tierra");
 const botonAgua = document.getElementById("boton-agua");
+const contenedorMascotas = document.getElementById("contenedor-mascotas");
 
 const mokepones = [];
+let opcionDeMokepones;
+let inputCapipepo;
+let inputHipodoge;
+let inputRatigueya;
 let mascotaJugador = "";
 let mascotaEnemigo = "";
 let ataqueEnemigo = "";
@@ -64,6 +66,8 @@ Ratigueya.ataques.push(
   { nombre: "💧", id: "boton-fuego" },
   { nombre: "🌱", id: "boton-tierra" }
 );
+
+mokepones.push(Hipodoge, Capipepo, Ratigueya);
 
 function seleccionarMascota() {
   mascotaJugador = "";
@@ -187,6 +191,17 @@ function configImagenes() {
   imagenEnemigo.src = `./assets/${mascotaEnemigo}.png`;
 }
 function main() {
+  mokepones.forEach((mokepon) => {
+    opcionDeMokepones = `
+    <label for="${mokepon.nombre}" class="tarjeta-mascota">
+      <p>${mokepon.nombre}</p>
+      <div style="background-image: url(${mokepon.imagen})">
+        <input type="radio" name="mascota" id="${mokepon.nombre}" />
+      </div>
+    </label>
+    `;
+    contenedorMascotas.innerHTML += opcionDeMokepones;
+  });
   ocultarSections();
   configBotones();
   configAtaques();
