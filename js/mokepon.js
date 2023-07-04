@@ -20,6 +20,7 @@ const botonFuego = document.getElementById("boton-fuego");
 const botonTierra = document.getElementById("boton-tierra");
 const botonAgua = document.getElementById("boton-agua");
 
+const mokepones = [];
 let mascotaJugador = "";
 let mascotaEnemigo = "";
 let ataqueEnemigo = "";
@@ -28,6 +29,20 @@ let resultado = "";
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 let finalizado = false;
+
+class Mokepon {
+  constructor(nombre, imagen, vida) {
+    this.nombre = nombre;
+    this.imagen = imagen;
+    this.vida = vida;
+  }
+}
+
+let Hipodoge = new Mokepon("Hipodoge", "assets/mokepones/hipodoge.png", 5);
+let Capipepo = new Mokepon("Capipepo", "assets/mokepones/capipepo.png", 5);
+let Ratigueya = new Mokepon("Ratigueya", "assets/mokepones/ratigueya.png", 5);
+
+mokepones.push(Hipodoge, Capipepo, Ratigueya);
 
 function seleccionarMascota() {
   mascotaJugador = "";
