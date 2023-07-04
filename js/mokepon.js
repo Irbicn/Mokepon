@@ -24,25 +24,15 @@ function seleccionarMascota() {
     return;
   }
 
-  const elementoMascota = document.getElementById("mascota-jugador");
-  elementoMascota.innerText = mascotaJugador;
   seleccionarMascotaEnemigo();
-  const sectionSeleccionarAtaque =
-    document.getElementById("seleccionar-ataque");
-  sectionSeleccionarAtaque.style.display = "block";
-  const sectionSeleccionarMascota = document.getElementById(
-    "seleccionar-mascota"
-  );
-  sectionSeleccionarMascota.style.display = "none";
+  configImagenes();
+  mostrarCombate();
 }
 
 function seleccionarMascotaEnemigo() {
   const mascotas = ["Hipodoge", "Capipepo", "Ratigueya"];
   const seleccion = aleatorio(0, mascotas.length - 1);
   mascotaEnemigo = mascotas[seleccion];
-
-  const elementoMascotaEnemigo = document.getElementById("mascota-enemigo");
-  elementoMascotaEnemigo.innerText = mascotaEnemigo;
 }
 
 function ataqueAleatorioEnemigo() {
@@ -57,17 +47,9 @@ function crearMensaje() {
   const mensajes = document.getElementById("mensajes");
   mensajes.appendChild(elemento);
 }
-function actualizarVidas() {
-  const vidasJugadorEl = document.getElementById("vidas-jugador");
-  const vidasEnemigoEl = document.getElementById("vidas-enemigo");
-  vidasEnemigoEl.innerText = vidasEnemigo;
-  vidasJugadorEl.innerText = vidasJugador;
-}
 function crearMensajeFinal(mensaje) {
-  const elemento = document.createElement("p");
+  const elemento = document.getElementById("mensaje-final");
   elemento.innerText = mensaje;
-  const mensajes = document.getElementById("mensajes");
-  mensajes.appendChild(elemento);
 }
 function revisarVidas() {
   if (vidasEnemigo > 0 && vidasJugador > 0) {
@@ -83,12 +65,14 @@ function revisarVidas() {
     desabilitarBotones();
   }
   const sectionReiniciar = document.getElementById("reiniciar");
-  sectionReiniciar.style.display = "block";
+  sectionReiniciar.style.display = "flex";
 }
 function ataque() {
   if (finalizado) {
     return;
   }
+  const vidasJugadorEl = document.getElementById("vidas-jugador");
+  const vidasEnemigoEl = document.getElementById("vidas-enemigo");
   ataqueAleatorioEnemigo();
   const jugador = ataqueJugador;
   const enemigo = ataqueEnemigo;
@@ -102,11 +86,11 @@ function ataque() {
   ) {
     resultado = "Ganaste 🎉";
     vidasEnemigo--;
-    actualizarVidas();
+    vidasEnemigoEl.firstChild.remove();
   } else {
     resultado = "Perdiste 🤣";
     vidasJugador--;
-    actualizarVidas();
+    vidasJugadorEl.firstChild.remove();
   }
   crearMensaje();
   revisarVidas();
@@ -139,18 +123,41 @@ function configAtaques() {
 function reiniciar() {
   location.reload();
 }
+function mostrarCombate() {
+  const sectionSeleccionarAtaque =
+    document.getElementById("seleccionar-ataque");
+  sectionSeleccionarAtaque.style.display = "block";
+  const sectionSeleccionarMascota = document.getElementById(
+    "seleccionar-mascota"
+  );
+  sectionSeleccionarMascota.style.display = "none";
+  const sectionVidas = document.getElementById("vidas");
+  sectionVidas.style.display = "flex";
+  const sectionMostrarMokepon = document.getElementById("mostrar-mokepon");
+  sectionMostrarMokepon.style.display = "grid";
+}
 function ocultarSections() {
   const sectionSeleccionarAtaque =
     document.getElementById("seleccionar-ataque");
   sectionSeleccionarAtaque.style.display = "none";
   const sectionReiniciar = document.getElementById("reiniciar");
   sectionReiniciar.style.display = "none";
+  const sectionVidas = document.getElementById("vidas");
+  sectionVidas.style.display = "none";
+  const sectionMostrarMokepon = document.getElementById("mostrar-mokepon");
+  sectionMostrarMokepon.style.display = "none";
 }
 function configBotones() {
   const botonSeleccionar = document.getElementById("boton-seleccionar");
   botonSeleccionar.addEventListener("click", seleccionarMascota);
   const botonReiniciar = document.getElementById("boton-reiniciar");
   botonReiniciar.addEventListener("click", reiniciar);
+}
+function configImagenes() {
+  const imagenJugador = document.getElementById("imagen-jugador");
+  imagenJugador.src = `./assets/${mascotaJugador}.png`;
+  const imagenEnemigo = document.getElementById("imagen-enemigo");
+  imagenEnemigo.src = `./assets/${mascotaEnemigo}.png`;
 }
 function main() {
   ocultarSections();

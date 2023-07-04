@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mokepon</title>
-    <script src="./js/mokepon.js"></script>
+    
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -36,29 +36,34 @@
       <button id="boton-seleccionar">Seleccionar</button>
     </section>
 
-    <section id="seleccionar-ataque">
-      <h2>Selecciona un ataque:</h2>
-
-      <p>
-        Tu mascota <span id="mascota-jugador"></span> tiene
-        <span id="vidas-jugador">3</span> vidas
-      </p>
-      <p>
-        La mascota <span id="mascota-enemigo"></span> de tu enemigo tiene
-        <span id="vidas-enemigo">3</span> vidas
-      </p>
-
-      <div>
-        <button id="boton-fuego">Fuego 🔥</button>
-        <button id="boton-agua">Agua 💧</button>
-        <button id="boton-tierra">tierra 🌱</button>
+    <section id="vidas">
+      <div >
+        <img src="./assets/user-solid.svg" alt="Jugador" />
+        <div id="vidas-jugador"><span>&#9829</span><span>&#9829</span><span>&#9829</span></div>
+      </div>
+      <div >
+        <div id="vidas-enemigo"><span>&#9829</span><span>&#9829</span><span>&#9829</span></div><img src="./assets/laptop-solid.svg" alt="Pc" />
       </div>
     </section>
 
-    <section id="mensajes"></section>
-
-    <section id="reiniciar">
-      <button id="boton-reiniciar">Reiniciar</button>
+    <section id="mostrar-mokepon">
+      <img src="" alt="Mokepon-jugador" id="imagen-jugador"/>
+      <div id="reiniciar">
+        <span id="mensaje-final">Mensaje Final 🎉🎉</span>
+        <button id="boton-reiniciar">Reiniciar</button>
+      </div>
+      <img src="" alt="Mokepon-pc" id="imagen-enemigo"/>
     </section>
+
+    <section id="seleccionar-ataque">
+      <h2>Selecciona un ataque:</h2>
+      <div class="botones">
+        <button id="boton-fuego">Fuego 🔥</button>
+        <button id="boton-agua">Agua 💧</button>
+        <button id="boton-tierra">Tierra 🌱</button>
+      </div>
+      <div id="mensajes"></div>
+    </section>
+    <script src="./js/mokepon.js"></script>
   </body>
 </html>

@@ -60,3 +60,88 @@ body {
   -moz-box-shadow: none;
   box-shadow: none;
 }
+#vidas {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+#vidas span {
+  font-size: 40px;
+  color: red;
+}
+#vidas img {
+  width: 50px;
+  height: 50px;
+}
+#vidas > div {
+  display: flex;
+  align-items: center;
+}
+#mostrar-mokepon {
+  display: grid;
+  grid-template-columns: 22% 37% 22%;
+  column-gap: 7.5%;
+  padding: 0 1%;
+  grid-template-areas: "a b c";
+  align-items: center;
+}
+
+#imagen-jugador {
+  grid-area: a;
+}
+#reiniciar {
+  grid-area: b;
+  flex-direction: column;
+  align-items: center;
+  background-color: #b0f6f2;
+  height: fit-content;
+  padding: 4px;
+  border: #75c2f9 2px solid;
+  -webkit-box-shadow: 0px 21px 54px -7px rgba(132, 182, 244, 1);
+  -moz-box-shadow: 0px 21px 54px -7px rgba(132, 182, 244, 1);
+  box-shadow: 0px 21px 54px -7px rgba(132, 182, 244, 1);
+  row-gap: 20px;
+}
+#imagen-enemigo {
+  grid-area: c;
+}
+#mostrar-mokepon > img {
+  width: 100%;
+}
+#seleccionar-ataque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #b0f6f2;
+  border: #75c2f9 2px solid;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top: 40px;
+}
+
+#boton-fuego,
+#boton-agua,
+#boton-tierra,
+#boton-reiniciar {
+  font-size: 22px;
+  border-radius: 10px;
+  border: solid 2px #5086c1;
+  background-color: transparent;
+  padding: 4px 10px;
+  -webkit-box-shadow: 3px 4px 8px 0px rgba(80, 134, 193, 1);
+  -moz-box-shadow: 3px 4px 8px 0px rgba(80, 134, 193, 1);
+  box-shadow: 3px 4px 8px 0px rgba(80, 134, 193, 1);
+}
+#boton-fuego:disabled,
+#boton-agua:disabled,
+#boton-tierra:disabled {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+#seleccionar-ataque > .botones {
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+}
