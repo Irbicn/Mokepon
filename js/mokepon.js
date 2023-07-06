@@ -1,7 +1,11 @@
 const mensajes = document.getElementById("mensajes");
+const ataquesJugadorEl = document.getElementById("ataques-jugador");
+const ataquesEnemigoEl = document.getElementById("ataques-enemigo");
+const nombreJugadorEl = document.getElementById("nombre-jugador");
+const nombreEnemigoEl = document.getElementById("nombre-enemigo");
+const victoriasJugadorEl = document.getElementById("victorias-jugador");
+const victoriasEnemigoEl = document.getElementById("victorias-enemigo");
 const mensajeFinal = document.getElementById("mensaje-final");
-const vidasJugadorEl = document.getElementById("vidas-jugador");
-const vidasEnemigoEl = document.getElementById("vidas-enemigo");
 const sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque");
 const sectionSeleccionarMascota = document.getElementById(
   "seleccionar-mascota"
@@ -42,7 +46,13 @@ class Mokepon {
 let Hipodoge = new Mokepon("Hipodoge", "assets/mokepones/hipodoge.png", 5);
 let Capipepo = new Mokepon("Capipepo", "assets/mokepones/capipepo.png", 5);
 let Ratigueya = new Mokepon("Ratigueya", "assets/mokepones/ratigueya.png", 5);
-
+const langostelvis = new Mokepon(
+  "Langostelvis",
+  "assets/mokepones/langostelvis.png",
+  7
+);
+const tucapalma = new Mokepon("Tucapalma", "assets/mokepones/tucapalma.png", 7);
+const pydos = new Mokepon("Pydos", "assets/mokepones/pydos.png", 7);
 Hipodoge.ataques.push(
   { nombre: "💧", id: "boton-agua" },
   { nombre: "💧", id: "boton-agua" },
@@ -64,28 +74,46 @@ Ratigueya.ataques.push(
   { nombre: "💧", id: "boton-fuego" },
   { nombre: "🌱", id: "boton-tierra" }
 );
+langostelvis.ataques.push(
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "🌱", id: "boton-agua" },
+  { nombre: "💧", id: "boton-fuego" },
+  { nombre: "🌱", id: "boton-tierra" }
+);
+pydos.ataques.push(
+  { nombre: "🌱", id: "boton-agua" },
+  { nombre: "🌱", id: "boton-agua" },
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "💧", id: "boton-fuego" },
+  { nombre: "🌱", id: "boton-tierra" }
+);
+tucapalma.ataques.push(
+  { nombre: "💧", id: "boton-agua" },
+  { nombre: "💧", id: "boton-agua" },
+  { nombre: "🔥", id: "boton-agua" },
+  { nombre: "🌱", id: "boton-fuego" },
+  { nombre: "🌱", id: "boton-tierra" }
+);
 
-mokepones.push(Hipodoge, Capipepo, Ratigueya);
+mokepones.push(Hipodoge, Capipepo, Ratigueya, tucapalma, pydos, langostelvis);
 
 function seleccionarMascota() {
-  mascotaJugador = "";
-
-  if (inputHipodoge.checked) {
-    mascotaJugador = mokepones.find((moke) => moke.nombre === inputHipodoge.id);
-  } else if (inputCapipepo.checked) {
-    mascotaJugador = mokepones.find((moke) => moke.nombre === inputCapipepo.id);
-  } else if (inputRatigueya.checked) {
-    mascotaJugador = mokepones.find(
-      (moke) => moke.nombre === inputRatigueya.id
-    );
-  } else {
-    return;
-  }
-
-  seleccionarMascotaEnemigo();
-  configImagenes();
-  mostrarCombate();
-  configAtaques();
+  const inputsMascotas = document.getElementsByName("mascota");
+  inputsMascotas.forEach((input) => {
+    if (input.checked) {
+      mascotaJugador = mokepones.find((moke) => moke.nombre === input.id);
+      seleccionarMascotaEnemigo();
+      mostrarNombres();
+      configImagenes();
+      mostrarCombate();
+      configAtaques();
+    }
+  });
+}
+function mostrarNombres() {
+  nombreJugadorEl.innerText = mascotaJugador.nombre;
+  nombreEnemigoEl.innerText = mascotaEnemigo.nombre;
 }
 function seleccionarMascotaEnemigo() {
   const seleccion = aleatorio(0, mokepones.length - 1);
@@ -96,17 +124,21 @@ function ataqueAleatorioEnemigo() {
   ataquesEnemigo.push(mascotaEnemigo.ataques[seleccion].nombre);
   iniciarPelea();
 }
+
 function iniciarPelea() {
   if (ataquesJugador.length === mascotaJugador.ataques.length) {
     combate();
+    crearMensajes();
+    mensajes.style.display = "grid";
   }
 }
-function crearMensaje(jugador, enemigo) {
-  const elemento = document.createElement("p");
-  const mensaje = `tu mascota ${mascotaJugador.nombre} ataco con ${jugador}, 
-  la mascota ${mascotaEnemigo.nombre} de tu enemigo ataco con ${enemigo}, ${resultado}`;
-  elemento.innerText = mensaje;
-  mensajes.appendChild(elemento);
+function crearMensajes(jugador, enemigo) {
+  victoriasJugadorEl.innerText = victoriasJugador;
+  victoriasEnemigoEl.innerText = victoriasEnemigo;
+  for (let i = 0; i < ataquesJugador.length; i++) {
+    ataquesJugadorEl.innerHTML += `<p>${ataquesJugador[i]}</p>`;
+    ataquesEnemigoEl.innerHTML += `<p>${ataquesEnemigo[i]}</p>`;
+  }
 }
 function crearMensajeFinal(mensaje) {
   mensajeFinal.innerText = mensaje;
@@ -138,13 +170,13 @@ function combate() {
       resultado = "Perdiste 🤣";
       victoriasEnemigo++;
     }
-    crearMensaje(jugador, enemigo);
   }
   validarPartida();
 }
 function configAtaques() {
   mascotaJugador.ataques.forEach((ataque) => {
     const boton = document.createElement("button");
+    boton.className = "boton-de-ataque";
     boton.innerText = ataque.nombre;
     boton.addEventListener("click", (e) => {
       ataquesJugador.push(ataque.nombre);
@@ -166,6 +198,7 @@ function ocultarSections() {
   sectionSeleccionarAtaque.style.display = "none";
   sectionReiniciar.style.display = "none";
   sectionMostrarMokepon.style.display = "none";
+  mensajes.style.display = "none";
 }
 function configBotones() {
   botonSeleccionar.addEventListener("click", seleccionarMascota);
