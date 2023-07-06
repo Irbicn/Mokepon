@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mokepon</title>
-    
+
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -13,35 +13,26 @@
 
     <section id="seleccionar-mascota">
       <h2>Selecciona una mascota:</h2>
-      <div id="contenedor-mascotas">
-      </div>
+      <div id="contenedor-mascotas"></div>
       <button id="boton-seleccionar">Seleccionar</button>
     </section>
 
-    <section id="vidas">
-      <div >
-        <img src="./assets/user-solid.svg" alt="Jugador" />
-        <div id="vidas-jugador"><span>&#9829</span><span>&#9829</span><span>&#9829</span></div>
-      </div>
-      <div >
-        <div id="vidas-enemigo"><span>&#9829</span><span>&#9829</span><span>&#9829</span></div><img src="./assets/laptop-solid.svg" alt="Pc" />
-      </div>
-    </section>
-
     <section id="mostrar-mokepon">
-      <img src="" alt="Mokepon-jugador" id="imagen-jugador"/>
+      <img src="" alt="Mokepon-jugador" id="imagen-jugador" />
       <div id="reiniciar">
         <span id="mensaje-final">Mensaje Final 🎉🎉</span>
         <button id="boton-reiniciar">Reiniciar</button>
       </div>
-      <img src="" alt="Mokepon-pc" id="imagen-enemigo"/>
+      <img src="" alt="Mokepon-pc" id="imagen-enemigo" />
     </section>
 
     <section id="seleccionar-ataque">
       <h2>Selecciona un ataque:</h2>
-      <div class="botones" id="botones-ataque">
+      <div class="botones" id="botones-ataque"></div>
+      <div id="mensajes">
+        <div id="ataquesJugador"></div>
+        <div id="ataquesEnemigo"></div>
       </div>
-      <div id="mensajes"></div>
     </section>
     <script src="./js/mokepon.js"></script>
   </body>

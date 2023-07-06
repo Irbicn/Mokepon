@@ -17,6 +17,8 @@ const botonesAtaque = document.getElementById("botones-ataque");
 const contenedorMascotas = document.getElementById("contenedor-mascotas");
 
 const mokepones = [];
+const ataquesJugador = [];
+const ataquesEnemigo = [];
 let opcionDeMokepones;
 let opcionDeAtaques;
 let inputCapipepo;
@@ -25,9 +27,8 @@ let inputRatigueya;
 let mascotaJugador;
 let mascotaEnemigo;
 let resultado = "";
-let vidasJugador = 3;
-let vidasEnemigo = 3;
-let finalizado = false;
+let victoriasJugador = 0;
+let victoriasEnemigo = 0;
 
 class Mokepon {
   constructor(nombre, imagen, vida) {
@@ -92,7 +93,13 @@ function seleccionarMascotaEnemigo() {
 }
 function ataqueAleatorioEnemigo() {
   const seleccion = aleatorio(0, mascotaEnemigo.ataques.length - 1);
-  return mascotaEnemigo.ataques[seleccion].nombre;
+  ataquesEnemigo.push(mascotaEnemigo.ataques[seleccion].nombre);
+  iniciarPelea();
+}
+function iniciarPelea() {
+  if (ataquesJugador.length === mascotaJugador.ataques.length) {
+    combate();
+  }
 }
 function crearMensaje(jugador, enemigo) {
   const elemento = document.createElement("p");
@@ -104,59 +111,45 @@ function crearMensaje(jugador, enemigo) {
 function crearMensajeFinal(mensaje) {
   mensajeFinal.innerText = mensaje;
 }
-function revisarVidas() {
-  if (vidasEnemigo > 0 && vidasJugador > 0) {
-    return;
-  }
-  if (vidasEnemigo <= 0) {
+function validarPartida() {
+  if (victoriasJugador > victoriasEnemigo) {
     crearMensajeFinal("Felicitaciones Ganaste 🎉🎉🎉");
-    finalizado = true;
-    desabilitarBotones();
-  } else if (vidasJugador <= 0) {
+  } else if (victoriasEnemigo > victoriasJugador) {
     crearMensajeFinal("Perdiste 😂🤣😂");
-    finalizado = true;
-    desabilitarBotones();
+  } else if (victoriasEnemigo === victoriasJugador) {
+    crearMensajeFinal("Empate 🤷‍♀️🤷‍♀️🤷‍♀️");
   }
   sectionReiniciar.style.display = "flex";
 }
-function lanzarAtaque(ataque) {
-  if (finalizado) {
-    return;
+function combate() {
+  for (i = 0; i < ataquesJugador.length; i++) {
+    const jugador = ataquesJugador[i];
+    const enemigo = ataquesEnemigo[i];
+    if (jugador === enemigo) {
+      resultado = "empate 🤷‍♀️";
+    } else if (
+      (jugador === "🔥" && enemigo === "🌱") ||
+      (jugador === "🌱" && enemigo === "💧") ||
+      (jugador === "💧" && enemigo === "🔥")
+    ) {
+      resultado = "Ganaste 🎉";
+      victoriasJugador++;
+    } else {
+      resultado = "Perdiste 🤣";
+      victoriasEnemigo++;
+    }
+    crearMensaje(jugador, enemigo);
   }
-
-  const jugador = ataque;
-  const enemigo = ataqueAleatorioEnemigo();
-  if (jugador === enemigo) {
-    resultado = "empate 🤷‍♀️";
-  } else if (
-    (jugador === "🔥" && enemigo === "🌱") ||
-    (jugador === "🌱" && enemigo === "💧") ||
-    (jugador === "💧" && enemigo === "🔥")
-  ) {
-    resultado = "Ganaste 🎉";
-    vidasEnemigo--;
-    vidasEnemigoEl.firstChild.remove();
-  } else {
-    resultado = "Perdiste 🤣";
-    vidasJugador--;
-    vidasJugadorEl.firstChild.remove();
-  }
-  crearMensaje(jugador, enemigo);
-  revisarVidas();
-}
-function desabilitarBotones() {
-  const botones = botonesAtaque.children;
-  for (let i = 0; i < botones.length; i++) {
-    botones[i].disabled = true;
-  }
+  validarPartida();
 }
 function configAtaques() {
   mascotaJugador.ataques.forEach((ataque) => {
     const boton = document.createElement("button");
-    boton.id = ataque.id;
     boton.innerText = ataque.nombre;
-    boton.addEventListener("click", () => {
-      lanzarAtaque(ataque.nombre);
+    boton.addEventListener("click", (e) => {
+      ataquesJugador.push(ataque.nombre);
+      ataqueAleatorioEnemigo();
+      e.target.disabled = true;
     });
     botonesAtaque.appendChild(boton);
   });
@@ -167,13 +160,11 @@ function reiniciar() {
 function mostrarCombate() {
   sectionSeleccionarAtaque.style.display = "block";
   sectionSeleccionarMascota.style.display = "none";
-  sectionVidas.style.display = "flex";
   sectionMostrarMokepon.style.display = "grid";
 }
 function ocultarSections() {
   sectionSeleccionarAtaque.style.display = "none";
   sectionReiniciar.style.display = "none";
-  sectionVidas.style.display = "none";
   sectionMostrarMokepon.style.display = "none";
 }
 function configBotones() {
