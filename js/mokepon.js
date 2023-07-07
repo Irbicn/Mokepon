@@ -285,6 +285,11 @@ function pintarCanvas() {
   hipodogeEnemigo.pintar();
   capipepoEnemigo.pintar();
   ratigueyaEnemigo.pintar();
+  if (mascotaJugador.velocidadX !== 0 || mascotaJugador.velocidadY !== 0) {
+    revisarColision(hipodogeEnemigo);
+    revisarColision(capipepoEnemigo);
+    revisarColision(ratigueyaEnemigo);
+  }
 }
 
 function moverDerecha() {
@@ -320,6 +325,26 @@ function sePresionoUnaTecla(e) {
     default:
       break;
   }
+}
+function revisarColision(enemigo) {
+  const arribaEnemigo = enemigo.y;
+  const abajoEnemigo = enemigo.y + enemigo.alto;
+  const izquierdaEnemigo = enemigo.x;
+  const derechaEnemigo = enemigo.x + enemigo.ancho;
+  const arribaMascota = mascotaJugador.y;
+  const abajoMascota = mascotaJugador.y + mascotaJugador.alto;
+  const izquierdaMascota = mascotaJugador.x;
+  const derechaMascota = mascotaJugador.x + mascotaJugador.ancho;
+  if (
+    abajoMascota < arribaEnemigo ||
+    arribaMascota > abajoEnemigo ||
+    derechaMascota < izquierdaEnemigo ||
+    izquierdaMascota > derechaEnemigo
+  ) {
+    return;
+  }
+  alert("colision");
+  detenerMovimiento();
 }
 
 function main() {
