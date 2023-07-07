@@ -20,6 +20,9 @@ const imagenEnemigo = document.getElementById("imagen-enemigo");
 const botonesAtaque = document.getElementById("botones-ataque");
 const contenedorMascotas = document.getElementById("contenedor-mascotas");
 
+const sectionVerMapa = document.getElementById("ver-mapa");
+const mapa = document.getElementById("mapa");
+
 const mokepones = [];
 const ataquesJugador = [];
 const ataquesEnemigo = [];
@@ -33,26 +36,57 @@ let mascotaEnemigo;
 let resultado = "";
 let victoriasJugador = 0;
 let victoriasEnemigo = 0;
+let lienzo = mapa.getContext("2d");
+let intervalo;
+const mapaBackground = new Image();
+mapaBackground.src = "./assets/mokemap.png";
 
 class Mokepon {
-  constructor(nombre, imagen, vida) {
+  constructor(nombre, imagen, vida, imagenMapa, x = 10, y = 10) {
     this.nombre = nombre;
     this.imagen = imagen;
     this.vida = vida;
     this.ataques = [];
+    this.x = x;
+    this.y = y;
+    this.velocidadX = 0;
+    this.velocidadY = 0;
+    this.ancho = 40;
+    this.alto = 40;
+    this.mapaImagen = new Image();
+    this.mapaImagen.src = imagenMapa || imagen;
   }
 }
 
-let Hipodoge = new Mokepon("Hipodoge", "assets/mokepones/hipodoge.png", 5);
-let Capipepo = new Mokepon("Capipepo", "assets/mokepones/capipepo.png", 5);
-let Ratigueya = new Mokepon("Ratigueya", "assets/mokepones/ratigueya.png", 5);
+let Hipodoge = new Mokepon(
+  "Hipodoge",
+  "assets/mokepones/hipodoge_atack.png",
+  5,
+  "assets/mokepones/hipodoge.png"
+);
+let Capipepo = new Mokepon(
+  "Capipepo",
+  "assets/mokepones/capipepo_atack.png",
+  5,
+  "assets/mokepones/capipepo.png"
+);
+let Ratigueya = new Mokepon(
+  "Ratigueya",
+  "assets/mokepones/ratigueya_atack.png",
+  5,
+  "assets/mokepones/ratigueya.png"
+);
 const langostelvis = new Mokepon(
   "Langostelvis",
-  "assets/mokepones/langostelvis.png",
+  "assets/mokepones/langostelvis_atack.png",
   7
 );
-const tucapalma = new Mokepon("Tucapalma", "assets/mokepones/tucapalma.png", 7);
-const pydos = new Mokepon("Pydos", "assets/mokepones/pydos.png", 7);
+const tucapalma = new Mokepon(
+  "Tucapalma",
+  "assets/mokepones/tucapalma_atack.png",
+  7
+);
+const pydos = new Mokepon("Pydos", "assets/mokepones/pydos_atack.png", 7);
 Hipodoge.ataques.push(
   { nombre: "💧", id: "boton-agua" },
   { nombre: "💧", id: "boton-agua" },
@@ -105,11 +139,21 @@ function seleccionarMascota() {
       mascotaJugador = mokepones.find((moke) => moke.nombre === input.id);
       seleccionarMascotaEnemigo();
       mostrarNombres();
-      configImagenes();
-      mostrarCombate();
+      pintarCanvas();
+      //mostrarCombate();
+      sectionSeleccionarMascota.style.display = "none";
+      configMapa();
       configAtaques();
     }
   });
+}
+function configMapa() {
+  sectionVerMapa.style.display = "flex";
+  mapa.width = 320;
+  mapa.height = 240;
+  intervalo = setInterval(pintarCanvas, 50);
+  window.addEventListener("keydown", sePresionoUnaTecla);
+  window.addEventListener("keyup", detenerMovimiento);
 }
 function mostrarNombres() {
   nombreJugadorEl.innerText = mascotaJugador.nombre;
@@ -191,7 +235,6 @@ function reiniciar() {
 }
 function mostrarCombate() {
   sectionSeleccionarAtaque.style.display = "block";
-  sectionSeleccionarMascota.style.display = "none";
   sectionMostrarMokepon.style.display = "grid";
 }
 function ocultarSections() {
@@ -199,15 +242,61 @@ function ocultarSections() {
   sectionReiniciar.style.display = "none";
   sectionMostrarMokepon.style.display = "none";
   mensajes.style.display = "none";
+  sectionVerMapa.style.display = "none";
 }
 function configBotones() {
   botonSeleccionar.addEventListener("click", seleccionarMascota);
   botonReiniciar.addEventListener("click", reiniciar);
 }
-function configImagenes() {
-  imagenJugador.src = mascotaJugador.imagen;
-  imagenEnemigo.src = mascotaEnemigo.imagen;
+function pintarCanvas() {
+  mascotaJugador.x = mascotaJugador.x + mascotaJugador.velocidadX;
+  mascotaJugador.y = mascotaJugador.y + mascotaJugador.velocidadY;
+  lienzo.clearRect(0, 0, mapa.width, mapa.height);
+  lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
+  lienzo.drawImage(
+    mascotaJugador.mapaImagen,
+    mascotaJugador.x,
+    mascotaJugador.y,
+    mascotaJugador.ancho,
+    mascotaJugador.alto
+  );
 }
+
+function moverDerecha() {
+  mascotaJugador.velocidadX = 5;
+}
+function moverIzquierda() {
+  mascotaJugador.velocidadX = -5;
+}
+function moverArriba() {
+  mascotaJugador.velocidadY = -5;
+}
+function moverAbajo() {
+  mascotaJugador.velocidadY = 5;
+}
+function detenerMovimiento() {
+  mascotaJugador.velocidadX = 0;
+  mascotaJugador.velocidadY = 0;
+}
+function sePresionoUnaTecla(e) {
+  switch (e.key) {
+    case "ArrowUp":
+      moverArriba();
+      break;
+    case "ArrowDown":
+      moverAbajo();
+      break;
+    case "ArrowLeft":
+      moverIzquierda();
+      break;
+    case "ArrowRight":
+      moverDerecha();
+      break;
+    default:
+      break;
+  }
+}
+
 function main() {
   mokepones.forEach((mokepon) => {
     opcionDeMokepones = `
@@ -220,9 +309,6 @@ function main() {
     `;
     contenedorMascotas.innerHTML += opcionDeMokepones;
   });
-  inputCapipepo = document.getElementById("Capipepo");
-  inputHipodoge = document.getElementById("Hipodoge");
-  inputRatigueya = document.getElementById("Ratigueya");
   ocultarSections();
   configBotones();
 }
