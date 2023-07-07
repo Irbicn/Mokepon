@@ -23,6 +23,7 @@ const contenedorMascotas = document.getElementById("contenedor-mascotas");
 const sectionVerMapa = document.getElementById("ver-mapa");
 const mapa = document.getElementById("mapa");
 
+const mokeponesEnemigos = [];
 const mokepones = [];
 const ataquesJugador = [];
 const ataquesEnemigo = [];
@@ -56,6 +57,9 @@ class Mokepon {
     this.mapaImagen = new Image();
     this.mapaImagen.src = imagenMapa || imagen;
   }
+  pintar() {
+    lienzo.drawImage(this.mapaImagen, this.x, this.y, this.ancho, this.alto);
+  }
 }
 
 let Hipodoge = new Mokepon(
@@ -87,6 +91,30 @@ const tucapalma = new Mokepon(
   7
 );
 const pydos = new Mokepon("Pydos", "assets/mokepones/pydos_atack.png", 7);
+const hipodogeEnemigo = new Mokepon(
+  "Hipodoge",
+  "assets/mokepones/hipodoge_atack.png",
+  5,
+  "assets/mokepones/hipodoge.png",
+  80,
+  120
+);
+const capipepoEnemigo = new Mokepon(
+  "Capipepo",
+  "assets/mokepones/capipepo_atack.png",
+  5,
+  "assets/mokepones/capipepo.png",
+  150,
+  95
+);
+const ratigueyaEnemigo = new Mokepon(
+  "Ratigueya",
+  "assets/mokepones/ratigueya_atack.png",
+  5,
+  "assets/mokepones/ratigueya.png",
+  200,
+  190
+);
 Hipodoge.ataques.push(
   { nombre: "💧", id: "boton-agua" },
   { nombre: "💧", id: "boton-agua" },
@@ -253,13 +281,10 @@ function pintarCanvas() {
   mascotaJugador.y = mascotaJugador.y + mascotaJugador.velocidadY;
   lienzo.clearRect(0, 0, mapa.width, mapa.height);
   lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
-  lienzo.drawImage(
-    mascotaJugador.mapaImagen,
-    mascotaJugador.x,
-    mascotaJugador.y,
-    mascotaJugador.ancho,
-    mascotaJugador.alto
-  );
+  mascotaJugador.pintar();
+  hipodogeEnemigo.pintar();
+  capipepoEnemigo.pintar();
+  ratigueyaEnemigo.pintar();
 }
 
 function moverDerecha() {
