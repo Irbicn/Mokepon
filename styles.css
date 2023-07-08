@@ -7,6 +7,12 @@ body {
 .titulo {
   text-align: center;
 }
+#contenedor-mascotas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
 #seleccionar-mascota {
   display: flex;
   flex-direction: column;
@@ -171,7 +177,4 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-#mapa {
-  border: 2px solid black;
 }
