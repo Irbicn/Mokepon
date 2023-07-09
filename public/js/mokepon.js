@@ -1,3 +1,5 @@
+import config from "./config.js";
+
 const mensajes = document.getElementById("mensajes");
 const ataquesJugadorEl = document.getElementById("ataques-jugador");
 const ataquesEnemigoEl = document.getElementById("ataques-enemigo");
@@ -347,7 +349,7 @@ function revisarColision(enemigo) {
   mostrarCombate();
 }
 function unirseAlJuego() {
-  fetch("http://192.168.0.107:8080/unirse").then((res) => {
+  fetch(`http://${config.hostname}:${config.port}/unirse`).then((res) => {
     if (res.ok) {
       res.text().then((respuesta) => {
         jugadorId = respuesta;
@@ -356,7 +358,7 @@ function unirseAlJuego() {
   });
 }
 function seleccionarMokepon() {
-  fetch(`http://192.168.0.107:8080/mokepon/${jugadorId}`, {
+  fetch(`http://${config.hostname}:${config.port}/mokepon/${jugadorId}`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -367,16 +369,19 @@ function seleccionarMokepon() {
   });
 }
 function enviarPosicion(x, y) {
-  fetch(`http://192.168.0.107:8080/mokepon/${jugadorId}/posicion`, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      x,
-      y,
-    }),
-  }).then((res) => {
+  fetch(
+    `http://${config.hostname}:${config.port}/mokepon/${jugadorId}/posicion`,
+    {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        x,
+        y,
+      }),
+    }
+  ).then((res) => {
     if (res.ok) {
       res.json().then(({ enemigos }) => {
         mokeponesEnemigos = enemigos.map((enemigo) => {
@@ -397,33 +402,36 @@ function enviarPosicion(x, y) {
   });
 }
 function enviarAtaques() {
-  fetch(`http://192.168.0.107:8080/mokepon/${jugadorId}/ataques`, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ataques: ataquesJugador,
-    }),
-  });
+  fetch(
+    `http://${config.hostname}:${config.port}/mokepon/${jugadorId}/ataques`,
+    {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ataques: ataquesJugador,
+      }),
+    }
+  );
 
   intervalo = setInterval(obtenerAtaques, 50);
 }
 function obtenerAtaques() {
-  fetch(`http://192.168.0.107:8080/mokepon/${enemigoId}/ataques`).then(
-    (res) => {
-      if (res.ok) {
-        res.json().then(({ ataques }) => {
-          console.log(ataques);
-          if (ataques.length === 5) {
-            ataquesEnemigo = ataques;
-            iniciarPelea();
-            clearInterval(intervalo);
-          }
-        });
-      }
+  fetch(
+    `http://${config.hostname}:${config.port}/mokepon/${enemigoId}/ataques`
+  ).then((res) => {
+    if (res.ok) {
+      res.json().then(({ ataques }) => {
+        console.log(ataques);
+        if (ataques.length === 5) {
+          ataquesEnemigo = ataques;
+          iniciarPelea();
+          clearInterval(intervalo);
+        }
+      });
     }
-  );
+  });
 }
 
 function main() {
